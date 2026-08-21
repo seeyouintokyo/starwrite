@@ -42,7 +42,7 @@ Starwrite 是本地文件驱动的内容生产主控 Skill。它不依赖某个 
 
 ## 配置向导
 
-任务需要 UniFuncs、图片 API 或公众号草稿箱而配置缺失时，先读取 [configuration.md](references/configuration.md)。用交互式向导说明用途和获取路径；取得用户授权后，只写入其私有配置目录。不得把任何 Key、App Secret、草稿 media_id 写入项目、Git、README、Vercel 或聊天复述中。
+任务需要 UniFuncs、图片 API 或公众号草稿箱而配置缺失时，先读取 [configuration.md](references/configuration.md)。UniFuncs 的实时搜索、网页阅读、深度搜索和深度研究共用一把 `UNIFUNCS_API_KEY`；根据任务选择，用户也可明确指定模式。用交互式向导说明用途和获取路径；取得用户授权后，只写入其私有配置目录。不得把任何 Key、App Secret、草稿 media_id 写入项目、Git、README、Vercel 或聊天复述中。
 
 公众号发布默认只创建**普通草稿**：不群发、不声明原创。只有用户明确说“发布到草稿箱”且配置完整时才执行发布。
 
@@ -50,8 +50,9 @@ Starwrite 是本地文件驱动的内容生产主控 Skill。它不依赖某个 
 
 只有选题或初稿缺少来源时，先读取 [research-policy.md](references/research-policy.md)。必须先完成 `事实卡片.md`，再写文章：每条可写入正文的事实都要带原始链接、发布日期或访问日期、来源类型和核验状态。来源不够可靠的内容只能作为待核验线索，不能写成事实。
 
-- 轻量产品科普：优先实时搜索与官方网页阅读。
-- 深度技术文章：先用 UniFuncs 深度研究收集线索，再回到官方文档、论文、代码仓库逐项复核。
+- 轻量产品科普或当前动态：优先 UniFuncs 实时搜索与官方网页阅读。
+- 需要多源比较和来源清单：使用 UniFuncs 深度搜索，再回到原始页面复核。
+- 深度技术文章：先用 UniFuncs 深度研究收集线索、反例与待核验问题，再回到官方文档、论文、代码仓库逐项复核。
 - 用户要求特定个人文风时，才加载 `khazix-writer`。它不是默认依赖。
 - 需要中文成文或改稿时，事实卡片完成后再按需加载 `human-writing`；不得把它当成预装前提。
 
