@@ -22,6 +22,39 @@ npx skills add https://github.com/seeyouintokyo/starwrite/tree/main/skills/starw
 
 随后直接告诉 Agent：`用 Starwrite 写一篇关于……的文章并生成公众号草稿。` Skill 会按需进入配置向导，而不是要求先手动读完 README。
 
+## 工作流结构
+
+```mermaid
+flowchart TD
+    A[输入：已有素材 / 只有选题 / 已有初稿] --> B[Starwrite 主控 Skill]
+    B --> C{需要补充事实吗？}
+    C -- 否 --> H[整理素材与事实卡片]
+    C -- 是 --> D[UniFuncs：同一把 UNIFUNCS_API_KEY]
+    D --> D1[实时搜索：找最新信息与官方入口]
+    D1 --> D2[网页阅读：读取网页、PDF、文档原文]
+    D --> D3[深度搜索：多源比较与来源清单]
+    D --> D4[深度研究：复杂技术或行业研究]
+    D2 --> H
+    D3 --> H
+    D4 --> H
+    H --> I[文章母稿.md]
+    I --> J[短视频脚本.md]
+    I --> K[公众号排版.html]
+    I --> L[录屏幻灯片.html]
+    I --> M[按需生成 3:4 信息图卡]
+    K --> N{用户明确要求创建草稿？}
+    N -- 是 --> O[公众号普通草稿箱]
+```
+
+### UniFuncs 运行前提
+
+Starwrite 负责选择上述四种 UniFuncs 能力和管理同一把 Key，**不在本仓库内打包 UniFuncs HTTP 客户端或代理服务**。运行它的 Agent 必须具备下列任一条件：
+
+1. 已连接 UniFuncs MCP：`https://mcp.unifuncs.com/mcp`，并使用 `Authorization: Bearer <UNIFUNCS_API_KEY>`；或
+2. 能通过官方 REST API 发起 HTTPS 请求，并从私有配置读取 `UNIFUNCS_API_KEY`。
+
+若两者都没有，Agent 应说明“缺少 UniFuncs 调用能力”，不能把搜索或研究说成已完成。
+
 ## 三种入口
 
 | 入口 | 适用情况 | 起点 |

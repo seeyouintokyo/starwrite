@@ -42,7 +42,7 @@ Starwrite 是本地文件驱动的内容生产主控 Skill。它不依赖某个 
 
 ## 配置向导
 
-任务需要 UniFuncs、图片 API 或公众号草稿箱而配置缺失时，先读取 [configuration.md](references/configuration.md)。UniFuncs 的实时搜索、网页阅读、深度搜索和深度研究共用一把 `UNIFUNCS_API_KEY`；根据任务选择，用户也可明确指定模式。用交互式向导说明用途和获取路径；取得用户授权后，只写入其私有配置目录。不得把任何 Key、App Secret、草稿 media_id 写入项目、Git、README、Vercel 或聊天复述中。
+任务需要 UniFuncs、图片 API 或公众号草稿箱而配置缺失时，先读取 [configuration.md](references/configuration.md)。UniFuncs 的实时搜索、网页阅读、深度搜索和深度研究共用一把 `UNIFUNCS_API_KEY`；根据任务选择，用户也可明确指定模式。Starwrite 不自带 UniFuncs HTTP 客户端：调用前必须确认当前 Agent 已连接 UniFuncs MCP，或能经官方 REST API 发起 HTTPS 请求；两者都不具备时说明缺少调用能力，不得声称已完成搜索。用交互式向导说明用途和获取路径；取得用户授权后，只写入其私有配置目录。不得把任何 Key、App Secret、草稿 media_id 写入项目、Git、README、Vercel 或聊天复述中。
 
 公众号发布默认只创建**普通草稿**：不群发、不声明原创。只有用户明确说“发布到草稿箱”且配置完整时才执行发布。
 

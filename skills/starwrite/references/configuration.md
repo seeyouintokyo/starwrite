@@ -35,6 +35,8 @@ Starwrite 只在某项能力将要使用时询问相应配置。不要要求用�
 
 同一 Key 下各能力独立计费或受账户权限限制。若 API 返回无权限或余额不足，提示用户检查 UniFuncs 账户权限与余额，不要求更换 Key。
 
+Starwrite 不携带 UniFuncs HTTP 客户端。运行 Agent 必须已连接 UniFuncs MCP（`https://mcp.unifuncs.com/mcp`，请求头为 `Authorization: Bearer <UNIFUNCS_API_KEY>`），或能通过官方 REST API 发起 HTTPS 请求。两者均不可用时，先报告该前提未满足。
+
 ## 写入格式
 
 ```dotenv
