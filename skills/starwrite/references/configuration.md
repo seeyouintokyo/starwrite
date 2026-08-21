@@ -35,7 +35,23 @@ Starwrite 只在某项能力将要使用时询问相应配置。不要要求用�
 
 同一 Key 下各能力独立计费或受账户权限限制。若 API 返回无权限或余额不足，提示用户检查 UniFuncs 账户权限与余额，不要求更换 Key。
 
-Starwrite 不携带 UniFuncs HTTP 客户端。运行 Agent 必须已连接 UniFuncs MCP（`https://mcp.unifuncs.com/mcp`，请求头为 `Authorization: Bearer <UNIFUNCS_API_KEY>`），或能通过官方 REST API 发起 HTTPS 请求。两者均不可用时，先报告该前提未满足。
+## REST API 调用速查
+
+Starwrite 不携带 UniFuncs HTTP 客户端，也不强制要求安装 UniFuncs MCP。若运行 Agent 具备 HTTPS 请求能力，优先直接调用官方 REST 端点：
+
+| 能力 | 方法 | 端点 | 关键参数 / 说明 |
+| --- | --- | --- | --- |
+| 实时搜索 | POST | `https://api.unifuncs.com/api/web-search/search` | `query`、`count`；返回 `code==0` 与 `data.webPages`。 |
+| 网页阅读 | POST | `https://api.unifuncs.com/api/web-reader` | `url`、`format: markdown`；成功时返回 Markdown 正文（非 JSON 包装）。 |
+| 深度搜索 | POST | `https://api.unifuncs.com/deepsearch/v1/chat/completions` | OpenAI 兼容格式，`model: s3`，`messages: [...]`。 |
+| 深度研究-创建任务 | POST | `https://api.unifuncs.com/deepresearch/v1/create_task` | 必须使用 `messages` 字段；`max_depth` 最小值为 `2`；`model` 可选 `u3` 等。 |
+| 深度研究-查询任务 | GET | `https://api.unifuncs.com/deepresearch/v1/query_task?task_id=...` | 轮询至 `status` 为 `completed`。 |
+
+统一认证头：`Authorization: Bearer <UNIFUNCS_API_KEY>`，`Content-Type: application/json`。
+
+> 经验：直接 REST 调用无需额外依赖，适合 Starwrite 这类纯 Markdown 编排层 Skill；只有当 Agent 本身无法发起 HTTPS 请求时，才需要连接 UniFuncs MCP 作为兜底。
+
+Starwrite 不携带 UniFuncs HTTP 客户端。运行 Agent 必须已连接 UniFuncs MCP，或能经官方 REST API 发起 HTTPS 请求。两者均不可用时，先报告该前提未满足。
 
 ## 写入格式
 
